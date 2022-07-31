@@ -7,7 +7,7 @@ export default function AddTask({ onCreate }) {
   const [task, setTask] = useState(initialState);
   const { randomId } = generators;
   function handleInput(event) {
-    setTask({ id: randomId(999999), title: event.target.value });
+    setTask({ ...initialState, id: randomId(999999), title: event.target.value });
   }
 
   function handleSubmit(event) {
