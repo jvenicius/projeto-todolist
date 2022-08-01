@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container, Typography } from '@mui/material';
 import AddTask from './components/AddTask';
 import Task from './components/Task';
 
@@ -62,7 +63,10 @@ class App extends React.Component {
   render() {
     const { tasks } = this.state;
     return (
-      <>
+      <Container maxWidth="sm">
+        <Typography sx={{ fontSize: '1.8rem', weight: 500 }} align="center">
+          jv - Lista de tarefas
+        </Typography>
         <AddTask onCreate={this.createTask} />
         {tasks.map((task) => (
           <Task
@@ -73,7 +77,7 @@ class App extends React.Component {
             hasFinished={task.hasFinished}
           />
         ))}
-      </>
+      </Container>
     );
   }
 }
