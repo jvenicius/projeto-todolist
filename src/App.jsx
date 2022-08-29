@@ -65,7 +65,7 @@ class App extends React.Component {
     return (
       <Container maxWidth="sm">
         <Typography sx={{ fontSize: '1.8rem', weight: 500 }} align="center">
-          jv - Lista de tarefas
+          Lista de tarefas
         </Typography>
         <AddTask onCreate={this.createTask} />
         {tasks.map((task) => (
