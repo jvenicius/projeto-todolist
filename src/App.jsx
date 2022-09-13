@@ -1,7 +1,7 @@
-import React from 'react';
-import { Container, Typography } from '@mui/material';
-import AddTask from './components/AddTask';
-import Task from './components/Task';
+import React from "react";
+import { Container, Typography } from "@mui/material";
+import AddTask from "./components/AddTask";
+import Task from "./components/Task";
 
 class App extends React.Component {
   constructor() {
@@ -21,7 +21,7 @@ class App extends React.Component {
   }
 
   loadTasksFromLocalStorage() {
-    const localStorageTasks = JSON.parse(localStorage.getItem('tasks'));
+    const localStorageTasks = JSON.parse(localStorage.getItem("tasks"));
     if (localStorageTasks) {
       this.setState({
         tasks: localStorageTasks,
@@ -33,7 +33,7 @@ class App extends React.Component {
     const { tasks } = this.state;
     const updatedTasks = [...tasks, newTask];
     this.setState({ tasks: updatedTasks });
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   }
 
   updateTask(updatedTask) {
@@ -48,7 +48,7 @@ class App extends React.Component {
     this.setState({
       tasks: updatedTasks,
     });
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   }
 
   removeTask(id) {
@@ -57,14 +57,14 @@ class App extends React.Component {
     this.setState({
       tasks: updatedTasks,
     });
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   }
 
   render() {
     const { tasks } = this.state;
     return (
       <Container maxWidth="sm">
-        <Typography sx={{ fontSize: '1.8rem', weight: 500 }} align="center">
+        <Typography sx={{ fontSize: "2rem", weight: 500 }} align="center">
           Lista de tarefas
         </Typography>
         <AddTask onCreate={this.createTask} />
