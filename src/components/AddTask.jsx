@@ -4,42 +4,89 @@ import { TextField, Button } from '@mui/material';
 import generators from '../lib/generators';
 
 export default function AddTask({ onCreate }) {
-  const initialState = { id: 0, title: '', hasFinished: false };
+  const initialState = { id: 0, title: '', description: '', hasFinished: false };
   const [task, setTask] = useState(initialState);
+  const [disableButton, setDisableButton] = useState(false);
+  const [error, setError] = useState();
   const { randomId } = generators;
-  function handleInput(event) {
+
+  function handleInputTitle(event) {
     setTask({
-      ...initialState,
+      ...task,
       id: randomId(999999),
       title: event.target.value,
     });
   }
 
+  function handleInputDescription(event) {
+    setTask({
+      ...task,
+      id: randomId(999999),
+      description: event.target.value,
+    });
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+    console.log('clicado')
     if (task.id > 0) {
       onCreate(task);
       setTask(initialState);
     }
   }
 
+  function hasError() {
+    if(error) {
+      setDisableButton(true);
+    }
+  }
+
+  const styleForm = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  }
+
+  const style = {
+    mb: 2,
+    maxWidth: 600
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={styleForm}>
       <TextField
         id="title-input"
-        variant="outlined"
         label="Título"
-        onChange={(event) => handleInput(event)}
+        onChange={(event) => handleInputTitle(event)}
         value={task.title}
         fullWidth
         margin="normal"
+        sx={style}
+        InputLabelProps={{
+          shrink: true
+        }}
+      />
+
+      <TextField
+        id="description-input"
+        label="Descrição"
+        onChange={(event) => handleInputDescription(event)}
+        value={task.description}
+        fullWidth
+        margin="normal"
+        sx={style}
+        InputLabelProps={{
+          shrink: true
+        }}
+        rows={10}
+        multiline
       />
       <Button
         type="submit"
-        variant="outlined"
+        variant="contained"
         fullWidth
         margin="normal"
-        sx={{ mb: 2 }}
+        sx={style}
       >
         Adicionar tarefa
       </Button>

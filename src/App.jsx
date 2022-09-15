@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Typography } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2"
 import AddTask from "./components/AddTask";
 import Task from "./components/Task";
 
@@ -63,20 +64,24 @@ class App extends React.Component {
   render() {
     const { tasks } = this.state;
     return (
-      <Container maxWidth="sm">
-        <Typography sx={{ fontSize: "2rem", weight: 500 }} align="center">
+      <Container maxWidth="xl">
+        <Typography sx={{ fontSize: "3rem", fontFamily: 'Arial' }} align="center">
           Lista de tarefas
         </Typography>
-        <AddTask onCreate={this.createTask} />
-        {tasks.map((task) => (
-          <Task
-            key={task.id}
-            data={task}
-            onRemove={this.removeTask}
-            onUpdate={this.updateTask}
-            hasFinished={task.hasFinished}
-          />
-        ))}
+        <AddTask onCreate={this.createTask}/>
+        <Grid container spacing={2}>
+          {tasks.map((task) => (
+            <Grid xs={12} md={4}>
+              <Task
+                key={task.id}
+                data={task}
+                onRemove={this.removeTask}
+                onUpdate={this.updateTask}
+                hasFinished={task.hasFinished}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     );
   }
