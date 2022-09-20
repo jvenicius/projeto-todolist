@@ -6,8 +6,6 @@ import generators from '../lib/generators';
 export default function AddTask({ onCreate }) {
   const initialState = { id: 0, title: '', description: '', hasFinished: false };
   const [task, setTask] = useState(initialState);
-  const [disableButton, setDisableButton] = useState(false);
-  const [error, setError] = useState();
   const { randomId } = generators;
 
   function handleInputTitle(event) {
@@ -28,16 +26,9 @@ export default function AddTask({ onCreate }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log('clicado')
     if (task.id > 0) {
       onCreate(task);
       setTask(initialState);
-    }
-  }
-
-  function hasError() {
-    if(error) {
-      setDisableButton(true);
     }
   }
 
@@ -78,7 +69,7 @@ export default function AddTask({ onCreate }) {
         InputLabelProps={{
           shrink: true
         }}
-        rows={10}
+        rows={5}
         multiline
       />
       <Button

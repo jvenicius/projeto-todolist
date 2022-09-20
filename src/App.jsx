@@ -43,6 +43,8 @@ class App extends React.Component {
       const taskToUpdate = task;
       if (taskToUpdate.id === updatedTask.id) {
         taskToUpdate.hasFinished = updatedTask.hasFinished;
+        taskToUpdate.title = updatedTask.title;
+        taskToUpdate.description = updatedTask.description;
       }
       return taskToUpdate;
     });
