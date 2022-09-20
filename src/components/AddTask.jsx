@@ -6,7 +6,16 @@ import generators from '../lib/generators';
 export default function AddTask({ onCreate }) {
   const initialState = { id: 0, title: '', description: '', hasFinished: false };
   const [task, setTask] = useState(initialState);
+  const [hasError, setHasError] = useState({ title: false, description: false });
   const { randomId } = generators;
+
+  function verifyInputTitleError(event) {
+    const { name, value } = event.target;
+    const errorToUpdate = {...hasError};
+    errorToUpdate[name] = value.length <= 3;
+    setHasError(errorToUpdate)
+    console.log(hasError)
+  }
 
   function handleInputTitle(event) {
     setTask({
@@ -47,19 +56,22 @@ export default function AddTask({ onCreate }) {
     <form onSubmit={handleSubmit} style={styleForm}>
       <TextField
         id="title-input"
+        name="title"
         label="Título"
         onChange={(event) => handleInputTitle(event)}
+        onBlur={(event) => verifyInputTitleError(event)}
         value={task.title}
         fullWidth
         margin="normal"
         sx={style}
         InputLabelProps={{
           shrink: true
-        }}
+        }}        
       />
 
       <TextField
         id="description-input"
+        name="description"
         label="Descrição"
         onChange={(event) => handleInputDescription(event)}
         value={task.description}

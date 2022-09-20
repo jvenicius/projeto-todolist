@@ -65,12 +65,13 @@ class App extends React.Component {
 
   render() {
     const { tasks } = this.state;
+
     return (
       <Container maxWidth="xl">
         <Typography sx={{ fontSize: "3rem", fontFamily: 'Arial' }} align="center">
           Lista de tarefas
         </Typography>
-        <AddTask onCreate={this.createTask}/>
+        <AddTask onCreate={this.createTask} />
         <Grid container spacing={2}>
           {tasks.map((task) => (
             <Grid xs={12} md={4}>
