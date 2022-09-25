@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropType from 'prop-types';
 import { TextField, Button } from '@mui/material';
 import generators from '../lib/generators';
 
-export default function AddTask({ onCreate }) {
-  const initialState = { id: 0, title: '', description: '', hasFinished: false };
+export default function AddTask({ onCreate, onError, dataError }) {
+  const initialState = {
+    id: 0,
+    title: '',
+    description: '',
+    hasFinished: false,
+  };
   const [task, setTask] = useState(initialState);
-  const [hasError, setHasError] = useState({ title: false, description: false });
+  const [disableSubmitButton, setDisableSubmitButton] = useState(false);
   const { randomId } = generators;
 
-  function verifyInputTitleError(event) {
+  function handleDisableButton() {
+    if (dataError.title || dataError.description) {
+      setDisableSubmitButton(true);
+    } else {
+      setDisableSubmitButton(false);
+    }
+  }
+
+  function handleError(event) {
     const { name, value } = event.target;
-    const errorToUpdate = {...hasError};
-    errorToUpdate[name] = value.length <= 3;
-    setHasError(errorToUpdate)
-    console.log(hasError)
+    const inputInfo = { name, value };
+    onError(inputInfo);
+    handleDisableButton();
   }
 
   function handleInputTitle(event) {
@@ -23,6 +35,7 @@ export default function AddTask({ onCreate }) {
       id: randomId(999999),
       title: event.target.value,
     });
+    handleError(event);
   }
 
   function handleInputDescription(event) {
@@ -44,13 +57,13 @@ export default function AddTask({ onCreate }) {
   const styleForm = {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  };
 
   const style = {
     mb: 2,
-    maxWidth: 600
-  }
+    maxWidth: 600,
+  };
 
   return (
     <form onSubmit={handleSubmit} style={styleForm}>
@@ -59,14 +72,15 @@ export default function AddTask({ onCreate }) {
         name="title"
         label="Título"
         onChange={(event) => handleInputTitle(event)}
-        onBlur={(event) => verifyInputTitleError(event)}
         value={task.title}
-        fullWidth
+        error={dataError.title}
+        helperText={dataError.title ? 'Digite ao menos 3 caracteres' : ''}
         margin="normal"
         sx={style}
         InputLabelProps={{
-          shrink: true
-        }}        
+          shrink: true,
+        }}
+        fullWidth
       />
 
       <TextField
@@ -79,7 +93,7 @@ export default function AddTask({ onCreate }) {
         margin="normal"
         sx={style}
         InputLabelProps={{
-          shrink: true
+          shrink: true,
         }}
         rows={5}
         multiline
@@ -90,6 +104,7 @@ export default function AddTask({ onCreate }) {
         fullWidth
         margin="normal"
         sx={style}
+        disabled={disableSubmitButton}
       >
         Adicionar tarefa
       </Button>
@@ -98,5 +113,10 @@ export default function AddTask({ onCreate }) {
 }
 
 AddTask.propTypes = {
-  onCreate: PropTypes.func.isRequired,
-};
+  dataError: PropType.shape({
+    title: PropType.boolean,
+    description: PropType.boolean,
+  }),
+  onCreate: PropType.func.isRequired,
+  onError: PropType.func.isRequired,
+}.isRequired;
