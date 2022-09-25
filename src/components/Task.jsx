@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import PropType from 'prop-types';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Checkbox, Button, Typography, Modal, Divider, TextField } from '@mui/material';
-import { red } from '@mui/material/colors'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import {
+  Box,
+  Checkbox,
+  Button,
+  Typography,
+  Modal,
+  Divider,
+  TextField,
+} from '@mui/material';
+import { red } from '@mui/material/colors';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 function Task({ data, onRemove, onUpdate, hasFinished }) {
-
   const [toggleModal, setToggleModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [task, setTask] = useState(data);
 
-  const redTheme = createTheme({ palette: { primary: red } })
+  const redTheme = createTheme({ palette: { primary: red } });
 
   function updateTask() {
-    onUpdate(task)
+    onUpdate(task);
   }
 
   function handleInputTitle(event) {
@@ -32,10 +39,12 @@ function Task({ data, onRemove, onUpdate, hasFinished }) {
   }
 
   function handleModal() {
-    const toggleModalUpdated = !toggleModal;
-    setToggleModal(toggleModalUpdated)
+    const { width } = window.screen;
+    if (width >= 480) {
+      const toggleModalUpdated = !toggleModal;
+      setToggleModal(toggleModalUpdated);
+    }
   }
-
 
   function handleCheckbox(event) {
     const hasFinishedUpdated = event.target.checked;
@@ -46,8 +55,8 @@ function Task({ data, onRemove, onUpdate, hasFinished }) {
   }
 
   function handleEditModal() {
-    updateTask(task)
-    setEditModal(!editModal)
+    updateTask(task);
+    setEditModal(!editModal);
   }
 
   const style = {
@@ -73,7 +82,7 @@ function Task({ data, onRemove, onUpdate, hasFinished }) {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          bgcolor: '#fff'
+          bgcolor: '#fff',
         }}
       >
         <Checkbox
@@ -84,7 +93,7 @@ function Task({ data, onRemove, onUpdate, hasFinished }) {
         <Box
           component="div"
           sx={{
-            cursor: "pointer"
+            cursor: 'pointer',
           }}
           onClick={() => handleModal()}
         >
@@ -94,7 +103,6 @@ function Task({ data, onRemove, onUpdate, hasFinished }) {
         <Button variant="contained" onClick={() => onRemove(data.id)}>
           <DeleteIcon />
         </Button>
-
       </Box>
       <Modal
         open={toggleModal}
@@ -103,51 +111,76 @@ function Task({ data, onRemove, onUpdate, hasFinished }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontWeight: '700' }}>
-            {editModal ?
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            sx={{ fontWeight: '700' }}
+          >
+            {editModal ? (
               <TextField
                 id="title-input"
-                onChange={(event) => { handleInputTitle(event) }}
+                onChange={(event) => {
+                  handleInputTitle(event);
+                }}
                 value={task.title}
                 variant="outlined"
                 label="Título"
                 fullWidth
                 margin="none"
-              /> : task.title}
+              />
+            ) : (
+              task.title
+            )}
           </Typography>
-          {editModal ? '' : <Divider color='#000' />}
+          {editModal ? '' : <Divider color="#000" />}
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {editModal ?
+            {editModal ? (
               <TextField
                 id="description-input"
                 label="Descrição"
-                onChange={(event) => { handleInputDescription(event) }}
+                onChange={(event) => {
+                  handleInputDescription(event);
+                }}
                 value={task.description}
                 fullWidth
                 margin="none"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
                 rows={5}
                 multiline
-              /> : task.description}
+              />
+            ) : (
+              task.description
+            )}
           </Typography>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3, textAlign: 'justify' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              mt: 3,
+              textAlign: 'justify',
+            }}
+          >
             <ThemeProvider theme={redTheme}>
-              <Button variant="contained" onClick={() => onRemove(data.id)} color="primary">
+              <Button
+                variant="contained"
+                onClick={() => onRemove(data.id)}
+                color="primary"
+              >
                 Excluir
               </Button>
             </ThemeProvider>
-            {editModal ?
+            {editModal ? (
               <Button variant="contained" onClick={() => handleEditModal()}>
                 Salvar
               </Button>
-              :
+            ) : (
               <Button variant="contained" onClick={() => handleEditModal()}>
                 Editar
               </Button>
-            }
-
+            )}
           </Box>
         </Box>
       </Modal>
