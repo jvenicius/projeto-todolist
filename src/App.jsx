@@ -1,6 +1,8 @@
 import React from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container } from '@mui/material';
+import styled, { createGlobalStyle } from 'styled-components';
 import Grid from '@mui/material/Unstable_Grid2';
+import backgroundImg from './img/background.jpg';
 import AddTask from './components/AddTask';
 import Task from './components/Task';
 
@@ -80,14 +82,29 @@ class App extends React.Component {
   render() {
     const { tasks } = this.state;
     const { errors } = this.state;
+
+    const GlobalStyle = createGlobalStyle`
+      body {
+        background: url(${backgroundImg}) no-repeat center/cover;
+        min-height: calc(100vh - 2.5rem);
+      }
+    `
+    const Title = styled.h1`
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;700&display=swap');
+      font-size: 3rem;
+      text-align: center;
+      font-family: 'Noto Sans Mono', monospace;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+    `
+
     return (
       <Container maxWidth="xl">
-        <Typography
-          sx={{ fontSize: '3rem', fontFamily: 'Arial' }}
-          align="center"
-        >
+        <GlobalStyle />
+        <Title>
           Lista de tarefas
-        </Typography>
+        </Title>
         <AddTask
           onCreate={this.createTask}
           onError={this.verifyInputErrors}

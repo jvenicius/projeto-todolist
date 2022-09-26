@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropType from 'prop-types';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Box } from '@mui/material';
 import generators from '../lib/generators';
 
 export default function AddTask({ onCreate, onError, dataError }) {
@@ -58,6 +58,9 @@ export default function AddTask({ onCreate, onError, dataError }) {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    p: 0,
+    borderRadius: 5,
+    my: 2
   };
 
   const style = {
@@ -66,49 +69,51 @@ export default function AddTask({ onCreate, onError, dataError }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={styleForm}>
-      <TextField
-        id="title-input"
-        name="title"
-        label="Título"
-        onChange={(event) => handleInputTitle(event)}
-        value={task.title}
-        error={dataError.title}
-        helperText={dataError.title ? 'Digite ao menos 3 caracteres' : ''}
-        margin="normal"
-        sx={style}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        fullWidth
-      />
+    <Box>
+      <form onSubmit={handleSubmit} style={styleForm}>
+        <TextField
+          id="title-input"
+          name="title"
+          label="Título"
+          onChange={(event) => handleInputTitle(event)}
+          value={task.title}
+          error={dataError.title}
+          helperText={dataError.title ? 'Digite ao menos 3 caracteres' : ''}
+          margin="normal"
+          sx={style}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          fullWidth
+        />
 
-      <TextField
-        id="description-input"
-        name="description"
-        label="Descrição"
-        onChange={(event) => handleInputDescription(event)}
-        value={task.description}
-        fullWidth
-        margin="normal"
-        sx={style}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        rows={5}
-        multiline
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        fullWidth
-        margin="normal"
-        sx={style}
-        disabled={disableSubmitButton}
-      >
-        Adicionar tarefa
-      </Button>
-    </form>
+        <TextField
+          id="description-input"
+          name="description"
+          label="Descrição"
+          onChange={(event) => handleInputDescription(event)}
+          value={task.description}
+          fullWidth
+          margin="normal"
+          sx={style}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          rows={5}
+          multiline
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          margin="normal"
+          sx={style}
+          disabled={disableSubmitButton}
+        >
+          Adicionar tarefa
+        </Button>
+      </form>
+    </Box>
   );
 }
 
