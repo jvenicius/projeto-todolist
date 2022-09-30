@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropType from 'prop-types';
+import styled from 'styled-components';
 import { TextField, Button, Box } from '@mui/material';
 import generators from '../lib/generators';
 
@@ -35,7 +36,6 @@ export default function AddTask({ onCreate, onError, dataError }) {
       id: randomId(999999),
       title: event.target.value,
     });
-    handleError(event);
   }
 
   function handleInputDescription(event) {
@@ -63,24 +63,49 @@ export default function AddTask({ onCreate, onError, dataError }) {
     my: 2
   };
 
-  const style = {
-    mb: 2,
-    maxWidth: 600,
+  const styleTextField = {
+    mb: 2
   };
 
+  const boxStyle = {
+    background: '#fff',
+    borderRadius: 5,
+    padding: 20,
+    marginTop: 50,
+  }
+
+  const Title = styled.h1`
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;700&display=swap');
+    font-size: 3rem;
+    text-align: center;
+    font-family: 'Noto Sans Mono', monospace;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+
+    @media screen and (max-width: 720px) {
+      font-size: 2rem;
+    }
+
+  `
+
   return (
-    <Box>
+    <Box style={boxStyle}>
+      <Title>
+        Adicionar tarefa
+      </Title>
       <form onSubmit={handleSubmit} style={styleForm}>
         <TextField
           id="title-input"
           name="title"
           label="Título"
           onChange={(event) => handleInputTitle(event)}
+          onBlur={(event) => handleError(event)}
           value={task.title}
           error={dataError.title}
           helperText={dataError.title ? 'Digite ao menos 3 caracteres' : ''}
           margin="normal"
-          sx={style}
+          sx={styleTextField}
           InputLabelProps={{
             shrink: true,
           }}
@@ -95,7 +120,7 @@ export default function AddTask({ onCreate, onError, dataError }) {
           value={task.description}
           fullWidth
           margin="normal"
-          sx={style}
+          sx={styleTextField}
           InputLabelProps={{
             shrink: true,
           }}
@@ -107,7 +132,6 @@ export default function AddTask({ onCreate, onError, dataError }) {
           variant="contained"
           fullWidth
           margin="normal"
-          sx={style}
           disabled={disableSubmitButton}
         >
           Adicionar tarefa

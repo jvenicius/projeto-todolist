@@ -1,10 +1,11 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import Grid from '@mui/material/Unstable_Grid2';
 import backgroundImg from './img/background.jpg';
 import AddTask from './components/AddTask';
 import Task from './components/Task';
+import Footer from './components/Footer';
 
 class App extends React.Component {
   constructor() {
@@ -86,31 +87,20 @@ class App extends React.Component {
     const GlobalStyle = createGlobalStyle`
       body {
         background: url(${backgroundImg}) no-repeat center/cover;
-        min-height: calc(100vh - 2.5rem);
+        min-height: 100vh;
+        width: auto;
       }
-    `
-    const Title = styled.h1`
-      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;700&display=swap');
-      font-size: 3rem;
-      text-align: center;
-      font-family: 'Noto Sans Mono', monospace;
-      font-weight: 700;
-      color: #fff;
-      margin: 0;
     `
 
     return (
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{display: 'flex', flexDirection: 'column'}}>
         <GlobalStyle />
-        <Title>
-          Lista de tarefas
-        </Title>
         <AddTask
           onCreate={this.createTask}
           onError={this.verifyInputErrors}
           dataError={errors}
         />
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{mt: 5}}>
           {tasks.map((task) => (
             <Grid xs={12} md={4}>
               <Task
@@ -123,6 +113,7 @@ class App extends React.Component {
             </Grid>
           ))}
         </Grid>
+        <Footer/>
       </Container>
     );
   }
