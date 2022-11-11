@@ -112,21 +112,24 @@ export default function AddTask({ onCreate, onError, dataError }) {
           fullWidth
         />
 
-        <TextField
-          id="description-input"
-          name="description"
-          label="Descrição"
-          onChange={(event) => handleInputDescription(event)}
-          value={task.description}
-          fullWidth
-          margin="normal"
-          sx={styleTextField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          rows={5}
-          multiline
-        />
+        {
+          window.screen.width > 480 ?
+            <TextField
+              id="description-input"
+              name="description"
+              label="Descrição"
+              onChange={(event) => handleInputDescription(event)}
+              value={task.description}
+              fullWidth
+              margin="normal"
+              sx={styleTextField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              rows={5}
+              multiline
+            /> : ''
+        }
         <Button
           type="submit"
           variant="contained"
