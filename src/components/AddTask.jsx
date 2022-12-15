@@ -52,6 +52,7 @@ export default function AddTask({ onCreate, onError, dataError }) {
       onCreate(task);
       setTask(initialState);
     }
+    
   }
 
   const styleForm = {

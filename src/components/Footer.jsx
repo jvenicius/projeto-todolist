@@ -7,6 +7,7 @@ export default function Footer() {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-top: 100px;
         padding: 1rem 0;
     `
 
@@ -20,7 +21,7 @@ export default function Footer() {
 
     return (
         <FooterBox>
-            <Text>Desenvolvido por <Link href='https://www.instagram.com/jveniciusdev' color='inherit' underline='hover' target='_blank'>@jvenicius</Link></Text>
+            <Text>Desenvolvido por <Link href='https://www.instagram.com/dev.jvinny' color='inherit' underline='hover' target='_blank'>@dev.jvinny</Link></Text>
         </FooterBox>
     )
 
