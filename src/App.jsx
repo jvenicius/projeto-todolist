@@ -2,7 +2,6 @@ import React from 'react';
 import { Container } from '@mui/material';
 import { createGlobalStyle } from 'styled-components';
 import Grid from '@mui/material/Unstable_Grid2';
-import backgroundImg from './img/background.jpg';
 import AddTask from './components/AddTask';
 import Task from './components/Task';
 import Footer from './components/Footer';
@@ -13,29 +12,15 @@ class App extends React.Component {
 
     this.state = {
       tasks: [],
-      errors: {
-        title: false,
-        description: false,
-      },
     };
 
     this.createTask = this.createTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
     this.updateTask = this.updateTask.bind(this);
-    this.verifyInputErrors = this.verifyInputErrors.bind(this);
   }
 
   componentDidMount() {
     this.loadTasksFromLocalStorage();
-  }
-
-  verifyInputErrors(inputInfo) {
-    const { name, value } = inputInfo;
-    const subvalue = value.trim();
-    const data = { ...this.state };
-    const { errors } = data;
-    errors[name] = subvalue.length < 3;
-    this.setState(errors);
   }
 
   loadTasksFromLocalStorage() {
@@ -82,23 +67,18 @@ class App extends React.Component {
 
   render() {
     const { tasks } = this.state;
-    const { errors } = this.state;
 
     const GlobalStyle = createGlobalStyle`
       body {
-        background: url(${backgroundImg}) no-repeat center/cover;
-        min-height: 100vh;
+        background: #ccc;
         width: auto;
       }
     `
-
     return (
       <Container maxWidth="xl" sx={{display: 'flex', flexDirection: 'column'}}>
         <GlobalStyle />
         <AddTask
           onCreate={this.createTask}
-          onError={this.verifyInputErrors}
-          dataError={errors}
         />
         <Grid container spacing={2} sx={{mt: 5}}>
           {tasks.map((task) => (
